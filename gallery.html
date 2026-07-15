@@ -364,7 +364,20 @@
     <script src="js/jquery.magnific-popup.js"></script>
     <script src="js/YouTubePopUp.js"></script>
     <script src="js/before-after.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="js/custom.js">
+    // Mobile menu toggle
+    document.getElementById('navToggle').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.add('open'));
+    document.getElementById('mobileClose').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.remove('open'));
+    // Mobile submenu dropdowns
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggle.parentElement.classList.toggle('open');
+      });
+    });
+
+  </script>
 </body>
 
 </html>

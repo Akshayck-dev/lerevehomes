@@ -384,6 +384,45 @@
     }
     .mobile-dropdown.open .mobile-dropdown-menu { display: flex; }
     .mobile-dropdown-menu a { border-bottom: none; font-size: 16px; padding: 10px 0; font-family: var(--ff-body); }
+  
+    /* ============================================================
+       MOBILE MENU (matches homepage exactly)
+    ============================================================ */
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 1.5px; background: var(--ink); transition: background 0.4s; }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: #fff; z-index: 999;
+      flex-direction: column; padding: 100px 32px 40px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu > a {
+      display: block; padding: 14px 0; font-size: 22px; font-family: 'Cormorant Garamond', Georgia, serif;
+      border-bottom: 1px solid #e8e2d6; color: #1a1a1a;
+    }
+    .mobile-menu > a:hover { color: #b8912a; }
+    .mobile-close {
+      position: absolute; top: 24px; right: 24px;
+      background: none; border: none; cursor: pointer; font-size: 28px; color: #1a1a1a;
+    }
+    .mobile-dropdown { display: flex; flex-direction: column; border-bottom: 1px solid #e8e2d6; }
+    .mobile-dropdown-toggle { 
+      display: flex; align-items: center; justify-content: space-between; 
+      padding: 14px 0; font-size: 22px; font-family: 'Cormorant Garamond', Georgia, serif;
+      color: #1a1a1a; cursor: pointer;
+    }
+    .mobile-dropdown-toggle svg { width: 14px; height: 8px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform 0.4s; }
+    .mobile-dropdown.open .mobile-dropdown-toggle svg { transform: rotate(180deg); color: #b8912a; }
+    .mobile-dropdown-menu {
+      display: none; flex-direction: column; padding-left: 20px; padding-bottom: 10px;
+    }
+    .mobile-dropdown.open .mobile-dropdown-menu { display: flex; }
+    .mobile-dropdown-menu a { border-bottom: none; font-size: 16px; padding: 10px 0; font-family: 'Jost', sans-serif; color: #1a1a1a; }
+    .mobile-dropdown-menu a:hover { color: #b8912a; }
+    @media (max-width: 950px) {
+      .nav-links { display: none !important; }
+      .nav-toggle { display: flex !important; }
+    }
+
   </style>
 </head>
 
