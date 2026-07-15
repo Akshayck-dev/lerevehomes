@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+const fs = require('fs');
+
+const servicesHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -460,3 +462,7 @@
   </script>
 </body>
 </html>
+`;
+
+fs.writeFileSync('c:\\Users\\ACER\\Downloads\\Le Reve\\Services.html', servicesHtml);
+console.log('Services.html updated.');
