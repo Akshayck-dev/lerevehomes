@@ -9,38 +9,58 @@
     <link rel="shortcut icon" href="img/favicon.png" />
     <link rel="stylesheet" href="css/plugins.css" />
     <link rel="stylesheet" href="css/style.css" />
-</head>
 
-<body>
-    <!-- Preloader -->
-    <div id="preloader"></div>
-    <!-- Progress scroll totop -->
-    <div class="progress-wrap cursor-pointer">
-        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-        </svg>
-    </div>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <!-- Logo -->
-        <div class="logo-wrapper valign">
-            <div class="logo">
-                <a href="index.html"> <img src="/le reve .png" class="logo-img" alt="">
-                </a>
-            </div>
-        </div>
+  <style>
+    /* RESET & BASE FOR NAVBAR */
+    :root {
+      --gold:       #b8912a;
+      --gold-light: #d4ac50;
+      --gold-pale:  #f5edd8;
+      --ink:        #1a1a1a;
+      --ink-soft:   #555;
+      --paper:      #ffffff;
+      --bg-light:   #fcfbf7;
+      --line:       #e8e2d6;
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body:    'Jost', sans-serif;
+      --transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    
+    /* SCROLL PROGRESS */
+    #scroll-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--gold); z-index: 9999; transition: width 0.1s; }
 
-        <style>
-            @media (min-width:480px) {
-                .logo-img {
-                    width: 240px;
-                    /* Adjust the width to your desired size */
-                    height: auto;
-                    /* Maintain aspect ratio */
-                    overflow: hidden;
-                }
-            }
-      
+    /* NAVBAR */
+    #navbar { position: fixed; left: 0; top: 0; width: 100%; z-index: 1000; background: rgba(255, 255, 255, 0.98); box-shadow: 0 1px 0 var(--line); backdrop-filter: blur(10px); transition: background var(--transition), box-shadow var(--transition); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 100%; margin: 0; padding: 16px 4%; }
+    .nav-logo img { height: 50px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); position: relative; padding-bottom: 4px; transition: color var(--transition); text-decoration: none; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width var(--transition); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a { display: flex; align-items: center; gap: 5px; }
+    .nav-dropdown > a svg { width: 10px; height: 10px; }
+    .dropdown-menu { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--paper); border: 1px solid var(--line); border-radius: 4px; min-width: 220px; padding: 8px 0; opacity: 0; visibility: hidden; transition: opacity var(--transition), transform var(--transition); transform: translateX(-50%) translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); display: block !important; }
+    .nav-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown-menu::before { content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; background: transparent; }
+    .dropdown-menu li { display: block; margin: 0; padding: 0; }
+    .dropdown-menu a { display: block; padding: 12px 20px; font-size: 11px; color: var(--ink) !important; letter-spacing: 0.1em; transition: color var(--transition); text-align: left; }
+    .dropdown-menu a:hover { color: var(--gold) !important; background: var(--bg-light); }
+    .dropdown-menu a::after { display: none; }
+    .nav-cta { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--gold); color: var(--gold) !important; padding: 10px 24px; border-radius: 2px; font-size: 11px !important; font-weight: 600 !important; letter-spacing: 0.12em !important; transition: background var(--transition), color var(--transition) !important; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--gold); color: #fff !important; }
+    
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .nav-toggle span { display: block; width: 24px; height: 1.5px; background: var(--ink); transition: background var(--transition); }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--paper); z-index: 999; flex-direction: column; padding: 100px 32px 40px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { display: block; padding: 14px 0; font-size: 22px; font-family: var(--ff-display); border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close { position: absolute; top: 24px; right: 24px; background: none; border: none; cursor: pointer; font-size: 28px; color: var(--ink); }
+
     .mobile-dropdown { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
     .mobile-dropdown-toggle { 
       display: flex; align-items: center; justify-content: space-between; 
@@ -54,29 +74,107 @@
     }
     .mobile-dropdown.open .mobile-dropdown-menu { display: flex; }
     .mobile-dropdown-menu a { border-bottom: none; font-size: 16px; padding: 10px 0; font-family: var(--ff-body); }
+
+    @media (max-width: 950px) {
+      .nav-links { display: none !important; }
+      .nav-toggle { display: flex !important; }
+      .nav-inner { padding: 16px 24px; }
+    }
+    
+    /* Adjust spacing on the content wrapper for fixed navbar */
+    .content-wrapper {
+      padding-top: 80px;
+    }
   </style>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
-                class="icon-bar"><i class="ti-line-double"></i></span> </button>
-        <!-- Navbar links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link nav-color" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link nav-color" href="about.html">About</a></li>
-                <li class="nav-item"><a class="nav-link nav-color" href="Services.html">services</a></li>
-                <li class="nav-item dropdown"> <a class="nav-link nav-color" href="#" role="button"
-                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Gallery<i
-                            class="ti-angle-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="int-gallery.html" class="dropdown-item"><span>INTERIOR</span></a></li>
-                        <li><a href="ext-gallery.html" class="dropdown-item"><span>EXTERIOR</span></a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link nav-color" href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader"></div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Navbar -->
+      <!-- SCROLL PROGRESS -->
+  <div id="scroll-progress"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" class="scrolled">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <a href="index.html"><img src="le reve.jpg" alt="Le Rêve" /></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav-dropdown">
+          <a href="Services.html">
+            Services
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="architectural_designing.html">Architectural Designing</a></li>
+            <li><a href="Project Management.html">Project Management</a></li>
+            <li><a href="Interior Designing.html">Interior Designers</a></li>
+            <li><a href="Contractors.html">Contractors</a></li>
+          </ul>
+        </li>
+        <li class="nav-dropdown">
+          <a href="gallery.html" class="active">
+            Gallery
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="int-gallery.html">Interior Gallery</a></li>
+            <li><a href="ext-gallery.html">Exterior Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="contact.html" class="nav-cta">
+            Get In Touch
+          </a>
+        </li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">✕</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    
+    <div class="mobile-dropdown">
+      <div class="mobile-dropdown-toggle">Services <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></div>
+      <div class="mobile-dropdown-menu">
+        <a href="architectural_designing.html">Architectural Designing</a>
+        <a href="Project Management.html">Project Management</a>
+        <a href="Interior Designing.html">Interior Designers</a>
+        <a href="Contractors.html">Contractors</a>
+      </div>
+    </div>
+
+    <div class="mobile-dropdown">
+      <div class="mobile-dropdown-toggle">Gallery <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></div>
+      <div class="mobile-dropdown-menu">
+        <a href="int-gallery.html">Interior Gallery</a>
+        <a href="ext-gallery.html">Exterior Gallery</a>
+      </div>
+    </div>
+
+    <a href="testimonials.html">Testimonials</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" style="color:var(--gold);margin-top:8px;">Get In Touch →</a>
+  </div>
     <!-- Content -->
     <div class="content-wrapper">
         <!-- Lines -->
@@ -378,6 +476,30 @@
     });
 
   </script>
+<script>
+    // Scroll progress
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.scrollY;
+      let docHeight = document.body.offsetHeight;
+      let winHeight = window.innerHeight;
+      let scrollPercent = scrollTop / (docHeight - winHeight);
+      const sp = document.getElementById('scroll-progress');
+      if (sp) sp.style.width = scrollPercent * 100 + '%';
+    });
+
+    // Mobile menu toggle
+    document.getElementById('navToggle').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.add('open'));
+    document.getElementById('mobileClose').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.remove('open'));
+      
+    // Mobile submenu dropdowns
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggle.parentElement.classList.toggle('open');
+      });
+    });
+</script>
 </body>
 
 </html>
