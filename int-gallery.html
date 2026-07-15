@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interior Design Gallery | Le Rêve Homes</title>
+  <meta name="description" content="Explore Le Rêve Homes' interior design gallery — living rooms, bedrooms, kitchens, bathrooms, offices and 3D visualizations." />
+  <link rel="shortcut icon" href="img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & TOKENS
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:        #b8912a;
+      --gold-light:  #d4aa4a;
+      --ink:         #1a1a1a;
+      --ink-soft:    #4a4a4a;
+      --paper:       #faf9f7;
+      --white:       #ffffff;
+      --ff-display:  'Cormorant Garamond', Georgia, serif;
+      --ff-body:     'Jost', sans-serif;
+      --transition:  0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --container:   1200px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--ff-body); background: var(--white); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ============================================================
+       SCROLL PROGRESS
+    ============================================================ */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: var(--gold); width: 0%; z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ============================================================
+       CONTAINER
+    ============================================================ */
+    .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    nav#navbar {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 20px 0; transition: padding var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+    nav#navbar.scrolled {
+      padding: 12px 0; background: rgba(255,255,255,0.97);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.07);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo img { height: 44px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: #fff !important; padding: 10px 22px;
+      font-size: 12px !important; letter-spacing: 0.12em !important;
+      transition: background var(--transition) !important;
+    }
+    .nav-cta:hover { background: #96751e !important; }
+    .nav-dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute; top: calc(100% + 20px); left: 50%; transform: translateX(-50%) translateY(-8px);
+      background: #fff; min-width: 220px; border-radius: 8px; padding: 12px 0;
+      opacity: 0; visibility: hidden; transition: opacity var(--transition), transform var(--transition);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    }
+    .nav-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown-menu::before { content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; background: transparent; }
+    .dropdown-menu a {
+      display: block; padding: 10px 20px; font-size: 13px; font-weight: 400;
+      color: var(--ink-soft); transition: color var(--transition), background var(--transition);
+    }
+    .dropdown-menu a:hover { color: var(--gold); background: #faf8f4; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-toggle span { width: 24px; height: 1.5px; background: var(--ink); transition: var(--transition); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+      background: #fff; z-index: 1100; padding: 80px 32px 40px;
+      display: flex; flex-direction: column; gap: 24px;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.1); transition: right var(--transition);
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { font-size: 16px; font-weight: 500; color: var(--ink); letter-spacing: 0.05em; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 24px; right: 24px; background: none; border: none;
+      font-size: 28px; cursor: pointer; color: var(--ink);
+    }
+
+    /* ============================================================
+       PAGE HEADER
+    ============================================================ */
+    .gallery-header {
+      padding: 160px 0 60px;
+      background: var(--paper);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('img/banner.jpg') center/cover no-repeat;
+      opacity: 0.06;
+    }
+    .gallery-header .eyebrow {
+      font-family: var(--ff-body);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .gallery-header h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 400; line-height: 1.15; color: var(--ink);
+    }
+    .gallery-header h1 em {
+      color: var(--gold); font-style: italic;
+    }
+    .gallery-header p {
+      font-size: 15px; color: var(--ink-soft);
+      margin-top: 12px; max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+    .header-divider {
+      width: 60px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 24px auto 0;
+    }
+
+    /* ============================================================
+       FILTER TABS
+    ============================================================ */
+    .filter-bar {
+      background: var(--white);
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky; top: 68px; z-index: 100;
+    }
+    .filter-tabs {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center; list-style: none;
+    }
+    .filter-tabs li {
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 8px 18px; border-radius: 2px; cursor: pointer;
+      color: var(--ink-soft); border: 1px solid rgba(0,0,0,0.1);
+      transition: all var(--transition);
+      user-select: none;
+    }
+    .filter-tabs li:hover { color: var(--gold); border-color: var(--gold); }
+    .filter-tabs li.active {
+      background: var(--gold); color: #fff; border-color: var(--gold);
+    }
+
+    /* ============================================================
+       GALLERY GRID
+    ============================================================ */
+    .gallery-section { padding: 60px 0 100px; background: var(--white); }
+    .gallery-grid {
+      columns: 3; column-gap: 12px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .gallery-item img {
+      width: 100%; display: block;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: rgba(26, 26, 26, 0);
+      transition: background var(--transition);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-item:hover .gallery-item-overlay { background: rgba(26,26,26,0.35); }
+    .gallery-item-overlay svg {
+      width: 36px; height: 36px; stroke: #fff; fill: none; stroke-width: 1.5;
+      opacity: 0; transform: scale(0.7);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-item:hover .gallery-item-overlay svg { opacity: 1; transform: scale(1); }
+
+    /* hidden items when filtered */
+    .gallery-item.hidden { display: none; }
+
+    /* ============================================================
+       LIGHTBOX
+    ============================================================ */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(10,10,10,0.95);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    .lightbox.open { opacity: 1; visibility: visible; }
+    .lightbox img {
+      max-width: 90vw; max-height: 88vh; object-fit: contain;
+      border-radius: 2px;
+    }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 28px;
+      background: none; border: none; color: #fff; font-size: 32px;
+      cursor: pointer; line-height: 1; opacity: 0.8; transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-prev, .lightbox-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 20px; transition: background var(--transition);
+    }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+    .lightbox-prev:hover, .lightbox-next:hover { background: rgba(184,145,42,0.6); }
+
+    /* ============================================================
+       FLOAT BUTTONS
+    ============================================================ */
+    .float-buttons { position: fixed; bottom: 30px; right: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 500; }
+    .float-btn {
+      width: 46px; height: 46px; border-radius: 50%; background: var(--gold);
+      display: grid; place-items: center; box-shadow: 0 4px 16px rgba(184,145,42,0.35);
+      transition: transform var(--transition), box-shadow var(--transition);
+      color: #fff; font-size: 18px;
+    }
+    .float-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(184,145,42,0.45); }
+    .float-btn img { width: 26px; height: 26px; object-fit: contain; border-radius: 50%; }
+    #back-top {
+      position: fixed; bottom: 30px; left: 24px; width: 40px; height: 40px;
+      background: var(--ink); color: #fff; border: none; border-radius: 50%;
+      display: grid; place-items: center; cursor: pointer; opacity: 0; visibility: hidden;
+      transition: opacity var(--transition), transform var(--transition); z-index: 500;
+    }
+    #back-top.show { opacity: 1; visibility: visible; }
+    #back-top:hover { transform: translateY(-3px); }
+    #back-top svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer { background: #1a1a1a; color: rgba(255,255,255,0.7); font-family: var(--ff-body); line-height: 1.6; }
+    .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr; gap: 48px; padding: 64px 0 52px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand img { height: 56px; width: auto; object-fit: contain; margin-bottom: 16px; filter: none !important; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; max-width: 240px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social a { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.18); display: grid; place-items: center; transition: border-color var(--transition), background var(--transition); }
+    .footer-social a:hover { border-color: var(--gold); background: var(--gold); }
+    .footer-social a svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .footer-col h5 { font-family: var(--ff-body); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 20px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    .footer-col ul a { font-size: 13.5px; color: rgba(255,255,255,0.6); transition: color var(--transition); }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .footer-contact-item svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
+    .footer-contact-item span { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .footer-contact-item a { color: rgba(255,255,255,0.65); transition: color var(--transition); }
+    .footer-contact-item a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; align-items: center; justify-content: center; padding: 22px 0; font-size: 12.5px; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
+
+    @media (max-width: 860px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; padding: 50px 0 40px; } }
+    @media (max-width: 560px) {
+      #footer .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+      #footer .footer-brand { grid-column: span 2; }
+      #footer .footer-col:last-child { grid-column: span 2; }
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .gallery-grid { columns: 2; }
+      .page-hero { padding: 140px 0 60px; }
+      .page-title { font-size: 38px; }
+    }
+    @media (max-width: 600px) {
+      .gallery-grid { columns: 1; column-gap: 0; }
+      .filter-tabs { gap: 8px; justify-content: center; }
+      .filter-tabs li { font-size: 10px; padding: 10px 16px; margin: 0; }
+      .page-title { font-size: 32px; line-height: 1.2; }
+      .page-desc { font-size: 14px; max-width: 100%; }
+      .float-buttons { bottom: 20px; right: 20px; }
+      .float-btn { width: 42px; height: 42px; font-size: 16px; }
+      .float-btn img { width: 22px; height: 22px; }
+    }
+    @media (max-width: 480px) {
+      .page-hero { padding: 120px 0 40px; }
+      .page-title { font-size: 28px; }
+      .filter-bar { padding: 15px; }
+    }
+
+    /* REVEAL ANIMATION */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .mobile-dropdown { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
+    .mobile-dropdown-toggle { 
+      display: flex; align-items: center; justify-content: space-between; 
+      padding: 14px 0; font-size: 22px; font-family: var(--ff-display);
+      color: var(--ink); cursor: pointer;
+    }
+    .mobile-dropdown-toggle svg { width: 14px; height: 8px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform var(--transition); }
+    .mobile-dropdown.open .mobile-dropdown-toggle svg { transform: rotate(180deg); color: var(--gold); }
+    .mobile-dropdown-menu {
+      display: none; flex-direction: column; padding-left: 20px; padding-bottom: 10px;
+    }
+    .mobile-dropdown.open .mobile-dropdown-menu { display: flex; }
+    .mobile-dropdown-menu a { border-bottom: none; font-size: 16px; padding: 10px 0; font-family: var(--ff-body); }
+  </style>
+</head>
+
+<body>
+  <div id="scroll-progress"></div>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="le reve.jpg" alt="Le Rêve Homes" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav-dropdown">
+          <a href="#">Services ▾</a>
+          <div class="dropdown-menu">
+            <a href="architectural_designing.html">Architectural Designing</a>
+            <a href="Project Management.html">PMC</a>
+            <a href="Contractors.html">Contractors</a>
+            <a href="Interior Designing.html">Interior Designing</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="#" class="active">Gallery ▾</a>
+          <div class="dropdown-menu">
+            <a href="int-gallery.html" style="color:#b8912a;">Interior</a>
+            <a href="ext-gallery.html">Exterior</a>
+          </div>
+        </li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      </ul>
+      <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">×</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="Services.html">Services</a>
+    <a href="int-gallery.html">Gallery — Interior</a>
+    <a href="ext-gallery.html">Gallery — Exterior</a>
+    <a href="testimonials.html">Testimonials</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- ============================================================
+       PAGE HEADER
+  ============================================================ -->
+  <header class="gallery-header">
+    <div class="container">
+      <p class="eyebrow">Our Work</p>
+      <h1>Interior Design <em>Gallery</em></h1>
+      <p>Spaces we've designed to inspire and elevate everyday living.</p>
+      <div class="header-divider"></div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       FILTER TABS
+  ============================================================ -->
+  <div class="filter-bar">
+    <div class="container">
+      <ul class="filter-tabs" id="filterTabs">
+        <li class="active" data-filter="all">All</li>
+        <li data-filter="living-room">Living Room</li>
+        <li data-filter="bedroom">Bedroom</li>
+        <li data-filter="kitchen">Kitchen</li>
+        <li data-filter="dining">Dining</li>
+        <li data-filter="bathroom">Bathroom</li>
+        <li data-filter="office">Office</li>
+        <li data-filter="3d-viz">3D Visualization</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       GALLERY GRID
+  ============================================================ -->
+  <section class="gallery-section">
+    <div class="container">
+      <div class="gallery-grid" id="galleryGrid">
+
+        <!-- LIVING ROOM -->
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/00.jpg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="bedroom">
+          <img src="img/int/000.jpg" alt="Bedroom" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="bedroom">
+          <img src="img/int/1.jpeg" alt="Bedroom" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/4.jpeg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="dining">
+          <img src="img/int/5.jpg" alt="Dining" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/6.jpeg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/7.jpeg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="bedroom">
+          <img src="img/int/8.jpeg" alt="Bedroom" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="kitchen">
+          <img src="img/int/9.jpeg" alt="Kitchen" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="dining">
+          <img src="img/int/11.jpeg" alt="Dining" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/12.jpeg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="office">
+          <img src="img/int/13.jpeg" alt="Office" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="bathroom">
+          <img src="img/int/14.jpeg" alt="Bathroom" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/16.jpeg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="kitchen">
+          <img src="img/int/18.jpg" alt="Kitchen" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="dining">
+          <img src="img/int/19.jpg" alt="Dining" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/20.jpg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="bedroom">
+          <img src="img/int/21.jpg" alt="Bedroom" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="kitchen">
+          <img src="img/int/22.jpg" alt="Kitchen" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="bathroom">
+          <img src="img/int/24.jpg" alt="Bathroom" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="3d-viz">
+          <img src="img/int/26.jpg" alt="3D Visualization" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="3d-viz">
+          <img src="img/int/28.jpg" alt="3D Visualization" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="3d-viz">
+          <img src="img/int/29.jpg" alt="3D Visualization" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="dining">
+          <img src="img/int/30.jpg" alt="Dining" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="living-room">
+          <img src="img/int/23.jpg" alt="Living Room" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="3d-viz">
+          <img src="img/int/27.jpg" alt="3D Visualization" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="kitchen">
+          <img src="img/int/15.jpeg" alt="Kitchen" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+        <div class="gallery-item reveal" data-cat="bathroom">
+          <img src="img/int/17.jpeg" alt="Bathroom" loading="lazy" />
+          <div class="gallery-item-overlay"><svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LIGHTBOX
+  ============================================================ -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">×</button>
+    <button class="lightbox-prev" id="lightboxPrev">&#8592;</button>
+    <img src="" alt="Gallery image" id="lightboxImg" />
+    <button class="lightbox-next" id="lightboxNext">&#8594;</button>
+  </div>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <style>
+    #footer { background: #1a1a1a; color: rgba(255,255,255,0.7); }
+    #footer * { box-sizing: border-box; }
+    #footer .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    #footer .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr; gap: 48px; padding: 64px 0 52px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    #footer .footer-brand img { height: 56px; width: auto; object-fit: contain; margin-bottom: 16px; filter: none !important; }
+    #footer .footer-brand p { font-size: 13px; line-height: 1.8; max-width: 240px; }
+    #footer .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+    #footer .footer-social a { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.18); display: grid; place-items: center; transition: border-color 0.4s, background 0.4s; color:#fff; }
+    #footer .footer-social a:hover { border-color: #b8912a; background: #b8912a; }
+    #footer .footer-social a svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    #footer .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 20px; }
+    #footer .footer-col ul { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    #footer .footer-col ul a { font-size: 13.5px; color: rgba(255,255,255,0.6); transition: color 0.4s; text-decoration: none; }
+    #footer .footer-col ul a:hover { color: #b8912a; }
+    #footer .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    #footer .footer-contact-item svg { width: 16px; height: 16px; stroke: #b8912a; fill: none; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
+    #footer .footer-contact-item span { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    #footer .footer-contact-item a { color: rgba(255,255,255,0.65); transition: color 0.4s; text-decoration: none; }
+    #footer .footer-contact-item a:hover { color: #b8912a; }
+    #footer .footer-bottom { display: flex; align-items: center; justify-content: center; padding: 22px 0; font-size: 12.5px; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
+    @media (max-width: 860px) { #footer .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; padding: 50px 0 40px; } }
+    @media (max-width: 560px) {
+      #footer .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+      #footer .footer-brand { grid-column: span 2; }
+      #footer .footer-col:last-child { grid-column: span 2; }
+    }
+  </style>
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="le reve.jpg" alt="Le Rêve Homes" />
+          <p>We create elegant, functional and sustainable homes that inspire and stand the test of time.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.19-.77 1.28-5.43 1.28-5.43s-.33-.65-.33-1.62c0-1.52.88-2.66 1.98-2.66.93 0 1.39.7 1.39 1.54 0 .94-.6 2.34-.91 3.64-.26 1.09.54 1.97 1.6 1.97 1.92 0 3.22-2.47 3.22-5.4 0-2.23-1.51-3.9-4.01-3.9-2.93 0-4.76 2.19-4.76 4.64 0 .84.24 1.43.62 1.89.07.08.08.16.06.25l-.23.9c-.04.14-.13.17-.3.1-1.11-.46-1.61-1.69-1.61-3.08C6.83 8.18 9.28 6 12.72 6c2.75 0 4.6 2.01 4.6 4.18 0 3.22-1.8 5.64-4.44 5.64-.89 0-1.73-.48-2.02-1.02l-.55 2.11c-.2.77-.74 1.73-1.1 2.32.83.26 1.71.4 2.62.4 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="Services.html">Services</a></li>
+            <li><a href="int-gallery.html">Gallery</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.72 5.72l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.22 16z"/></svg>
+            <span><a href="tel:+919744750812">097447 50812</a><br /><a href="tel:+918089127525">080891 27525</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span><a href="mailto:info@lerevehomes.in">info@lerevehomes.in</a></span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Our Address</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>First floor JBS Illimoottil building, Illimoodu, Thengana, Changanassery, Kottayam, Kerala 686536</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2023 Le Reve Homes. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating action buttons -->
+  <div class="float-buttons">
+    <a href="https://api.whatsapp.com/send?phone=+919744750812&text=Hello%20there!" target="_blank" class="float-btn" aria-label="WhatsApp">
+      <img src="whatsapp-icon.png" alt="WhatsApp" />
+    </a>
+    <a href="mailto:info@lerevehomes.in" class="float-btn mail" aria-label="Email">✉</a>
+  </div>
+  <button id="back-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    const backTop = document.getElementById('back-top');
+    const scrollProgress = document.getElementById('scroll-progress');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+      backTop.classList.toggle('show', window.scrollY > 400);
+      const h = document.documentElement;
+      const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+      scrollProgress.style.width = pct + '%';
+    });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Mobile menu
+    document.getElementById('navToggle').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.add('open'));
+    document.getElementById('mobileClose').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.remove('open'));
+
+    // Filter tabs
+    const filterTabs = document.querySelectorAll('.filter-tabs li');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        galleryItems.forEach(item => {
+          if (filter === 'all' || item.dataset.cat === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    let currentIndex = 0;
+    let visibleItems = [];
+
+    function openLightbox(index) {
+      visibleItems = [...document.querySelectorAll('.gallery-item:not(.hidden)')];
+      currentIndex = index;
+      lightboxImg.src = visibleItems[currentIndex].querySelector('img').src;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    galleryItems.forEach((item, i) => {
+      item.addEventListener('click', () => {
+        const visible = [...document.querySelectorAll('.gallery-item:not(.hidden)')];
+        const idx = visible.indexOf(item);
+        openLightbox(idx);
+      });
+    });
+
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxPrev').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+      lightboxImg.src = visibleItems[currentIndex].querySelector('img').src;
+    });
+    document.getElementById('lightboxNext').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % visibleItems.length;
+      lightboxImg.src = visibleItems[currentIndex].querySelector('img').src;
+    });
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') document.getElementById('lightboxPrev').click();
+      if (e.key === 'ArrowRight') document.getElementById('lightboxNext').click();
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 40);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>

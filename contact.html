@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Le Rêve Homes</title>
+  <meta name="description" content="Get in touch with Le Rêve Homes. We are here to help design and build your dream architectural or interior project." />
+  <link rel="shortcut icon" href="img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & TOKENS
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:        #b8912a;
+      --gold-light:  #d4aa4a;
+      --ink:         #1a1a1a;
+      --ink-soft:    #555555;
+      --paper:       #faf9f7;
+      --white:       #ffffff;
+      --ff-display:  'Cormorant Garamond', Georgia, serif;
+      --ff-body:     'Jost', sans-serif;
+      --transition:  0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --container:   1200px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--ff-body); background: #fdfdfc; color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ============================================================
+       SCROLL PROGRESS
+    ============================================================ */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: var(--gold); width: 0%; z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ============================================================
+       CONTAINER
+    ============================================================ */
+    .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    nav#navbar {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      padding: 20px 0; transition: padding var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+    nav#navbar.scrolled {
+      padding: 12px 0; background: rgba(255,255,255,0.97);
+      box-shadow: 0 2px 30px rgba(0,0,0,0.07);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo img { height: 44px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: #fff !important; padding: 10px 22px;
+      font-size: 12px !important; letter-spacing: 0.12em !important;
+      transition: background var(--transition) !important;
+    }
+    .nav-cta:hover { background: #96751e !important; }
+    .nav-dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute; top: calc(100% + 20px); left: 50%; transform: translateX(-50%) translateY(-8px);
+      background: #fff; min-width: 220px; border-radius: 8px; padding: 12px 0;
+      opacity: 0; visibility: hidden; transition: opacity var(--transition), transform var(--transition);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    }
+    .nav-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown-menu::before { content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; background: transparent; }
+    .dropdown-menu a {
+      display: block; padding: 10px 20px; font-size: 13px; font-weight: 400;
+      color: var(--ink-soft); transition: color var(--transition), background var(--transition);
+    }
+    .dropdown-menu a:hover { color: var(--gold); background: #faf8f4; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-toggle span { width: 24px; height: 1.5px; background: var(--ink); transition: var(--transition); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+      background: #fff; z-index: 1100; padding: 80px 32px 40px;
+      display: flex; flex-direction: column; gap: 24px;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.1); transition: right var(--transition);
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { font-size: 16px; font-weight: 500; color: var(--ink); letter-spacing: 0.05em; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 24px; right: 24px; background: none; border: none;
+      font-size: 28px; cursor: pointer; color: var(--ink);
+    }
+
+    /* ============================================================
+       CONTACT HERO / TOP SECTION
+    ============================================================ */
+    .contact-hero {
+      padding: 150px 0 60px;
+      background: #faf8f5;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .contact-hero-text {
+      flex: 1.1;
+      padding-right: 20px;
+    }
+    .contact-hero-text .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-hero-text .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .contact-hero-text h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .contact-hero-text h1 span {
+      color: var(--gold);
+    }
+    .contact-hero-text p {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      max-width: 440px;
+    }
+
+    /* Divider vertical line with circle */
+    .contact-hero-divider {
+      position: relative;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+    }
+    .contact-hero-divider::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      bottom: 15%;
+      width: 1px;
+      background: rgba(184, 145, 42, 0.2);
+    }
+    .contact-hero-divider::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .contact-hero-img {
+      flex: 1.2;
+      position: relative;
+    }
+    .contact-hero-img img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-top-left-radius: 180px;
+      border-bottom-left-radius: 180px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+    }
+
+    /* ============================================================
+       CONTACT CARD
+    ============================================================ */
+    .contact-card-section {
+      margin-top: -60px;
+      position: relative;
+      z-index: 10;
+      padding-bottom: 80px;
+    }
+    .contact-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.06);
+      padding: 60px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.3fr;
+      gap: 40px;
+    }
+    
+    .contact-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-col:not(:last-child) {
+      border-right: 1px dashed rgba(0,0,0,0.08);
+      padding-right: 40px;
+    }
+
+    /* Column 1 - Brand Info */
+    .brand-icon-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #faf8f5;
+      border: 1px solid rgba(184, 145, 42, 0.2);
+      display: grid;
+      place-items: center;
+      margin-bottom: 24px;
+    }
+    .brand-icon-circle svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.2;
+    }
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .brand-description {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    .brand-btn {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: transparent;
+      transition: all var(--transition);
+      margin-top: auto;
+    }
+    .brand-btn:hover {
+      background: var(--gold);
+      color: var(--white);
+    }
+
+    /* Column 2 - Details */
+    .col-header {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 28px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .col-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 36px;
+      height: 1.5px;
+      background: var(--gold);
+    }
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .info-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(184, 145, 42, 0.3);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .info-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.8;
+    }
+    .info-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .info-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      margin-bottom: 4px;
+    }
+    .info-value {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    .info-value a {
+      transition: color var(--transition);
+    }
+    .info-value a:hover {
+      color: var(--gold);
+    }
+
+    /* Column 3 - Message Form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-group-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group {
+      position: relative;
+    }
+    .form-control {
+      width: 100%;
+      border: none;
+      border-bottom: 1.5px solid rgba(0,0,0,0.08);
+      padding: 12px 0;
+      font-family: var(--ff-body);
+      font-size: 13.5px;
+      color: var(--ink);
+      background: transparent;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .form-control:focus {
+      border-color: var(--gold);
+    }
+    textarea.form-control {
+      resize: none;
+      height: 100px;
+    }
+    
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 28px;
+      border: none;
+      background: var(--gold);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background var(--transition);
+      margin-top: 10px;
+    }
+    .submit-btn:hover {
+      background: #96751e;
+    }
+
+    /* ============================================================
+       MAP SECTION
+    ============================================================ */
+    .map-section {
+      width: 100%;
+      height: 500px;
+      background: #e5e3df;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .map-section iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(0.2) contrast(1.1);
+    }
+
+    /* ============================================================
+       FLOAT BUTTONS
+    ============================================================ */
+    .float-buttons { position: fixed; bottom: 30px; right: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 500; }
+    .float-btn {
+      width: 46px; height: 46px; border-radius: 50%; background: var(--gold);
+      display: grid; place-items: center; box-shadow: 0 4px 16px rgba(184,145,42,0.35);
+      transition: transform var(--transition), box-shadow var(--transition);
+      color: #fff; font-size: 18px;
+    }
+    .float-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(184,145,42,0.45); }
+    .float-btn img { width: 26px; height: 26px; object-fit: contain; border-radius: 50%; }
+    #back-top {
+      position: fixed; bottom: 30px; left: 24px; width: 40px; height: 40px;
+      background: var(--ink); color: #fff; border: none; border-radius: 50%;
+      display: grid; place-items: center; cursor: pointer; opacity: 0; visibility: hidden;
+      transition: opacity var(--transition), transform var(--transition); z-index: 500;
+    }
+    #back-top.show { opacity: 1; visibility: visible; }
+    #back-top:hover { transform: translateY(-3px); }
+    #back-top svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 990px) {
+      .contact-card { grid-template-columns: 1fr; gap: 40px; padding: 40px 30px; }
+      .contact-col:not(:last-child) { border-right: none; border-bottom: 1px dashed rgba(0,0,0,0.08); padding-right: 0; padding-bottom: 40px; }
+      .contact-hero-inner { flex-direction: column; text-align: center; gap: 30px; }
+      .contact-hero-text p { margin: 0 auto; }
+      .contact-hero-divider { display: none; }
+      .contact-hero-img img { border-radius: 12px; height: 300px; }
+      .contact-hero-text .eyebrow { justify-content: center; }
+    }
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .contact-hero { padding: 140px 0 60px; }
+      .contact-hero-text h1 { font-size: 42px; }
+    }
+    @media (max-width: 600px) {
+      .form-group-row { grid-template-columns: 1fr; gap: 20px; }
+      .contact-hero-text h1 { font-size: 34px; line-height: 1.1; }
+      .contact-hero-text p { font-size: 14px; }
+      .contact-hero-img img { height: 240px; }
+      .map-section { height: 350px; }
+      .float-buttons { bottom: 20px; right: 20px; }
+      .float-btn { width: 42px; height: 42px; font-size: 16px; }
+      .float-btn img { width: 22px; height: 22px; }
+    }
+    @media (max-width: 480px) {
+      .contact-hero { padding: 120px 0 40px; }
+      .contact-hero-text h1 { font-size: 30px; }
+      .contact-card { padding: 30px 20px; border-radius: 8px; }
+      .brand-icon-circle { width: 54px; height: 54px; margin: 0 auto 20px; }
+      .brand-icon-circle svg { width: 26px; height: 26px; }
+      .brand-title { font-size: 12px; text-align: center; }
+      .brand-description, .contact-details p { text-align: center; font-size: 13px; }
+      .contact-col:not(:last-child) { padding-bottom: 30px; margin-bottom: 0; }
+    }
+
+    /* REVEAL ANIMATION */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .mobile-dropdown { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
+    .mobile-dropdown-toggle { 
+      display: flex; align-items: center; justify-content: space-between; 
+      padding: 14px 0; font-size: 22px; font-family: var(--ff-display);
+      color: var(--ink); cursor: pointer;
+    }
+    .mobile-dropdown-toggle svg { width: 14px; height: 8px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform var(--transition); }
+    .mobile-dropdown.open .mobile-dropdown-toggle svg { transform: rotate(180deg); color: var(--gold); }
+    .mobile-dropdown-menu {
+      display: none; flex-direction: column; padding-left: 20px; padding-bottom: 10px;
+    }
+    .mobile-dropdown.open .mobile-dropdown-menu { display: flex; }
+    .mobile-dropdown-menu a { border-bottom: none; font-size: 16px; padding: 10px 0; font-family: var(--ff-body); }
+  </style>
+</head>
+
+<body>
+  <div id="scroll-progress"></div>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="le reve.jpg" alt="Le Rêve Homes" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav-dropdown">
+          <a href="#">Services ▾</a>
+          <div class="dropdown-menu">
+            <a href="architectural_designing.html">Architectural Designing</a>
+            <a href="Project Management.html">PMC</a>
+            <a href="Contractors.html">Contractors</a>
+            <a href="Interior Designing.html">Interior Designing</a>
+          </div>
+        </li>
+        <li class="nav-dropdown">
+          <a href="#">Gallery ▾</a>
+          <div class="dropdown-menu">
+            <a href="int-gallery.html">Interior</a>
+            <a href="ext-gallery.html">Exterior</a>
+          </div>
+        </li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html" class="active nav-cta">Contact</a></li>
+      </ul>
+      <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">×</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="Services.html">Services</a>
+    <a href="int-gallery.html">Gallery — Interior</a>
+    <a href="ext-gallery.html">Gallery — Exterior</a>
+    <a href="testimonials.html">Testimonials</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- ============================================================
+       CONTACT HERO / TOP SECTION
+  ============================================================ -->
+  <section class="contact-hero">
+    <div class="container contact-hero-inner">
+      <div class="contact-hero-text">
+        <span class="eyebrow">Get in touch</span>
+        <h1>Contact <span>Us</span></h1>
+        <p>We're here to help and answer any question you might have. We look forward to hearing from you.</p>
+      </div>
+
+      <div class="contact-hero-divider"></div>
+
+      <div class="contact-hero-img">
+        <img src="img/ext/1.jpg" alt="Le Reve Villa" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT CARD
+  ============================================================ -->
+  <section class="contact-card-section">
+    <div class="container">
+      <div class="contact-card reveal">
+        
+        <!-- Column 1 - Brand -->
+        <div class="contact-col">
+          <div class="brand-icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M3 21h18M9 21V10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v11M19 21V6a2 2 0 0 0-2-2h-3M5 21V14a2 2 0 0 1 2-2h1"/></svg>
+          </div>
+          <h3 class="brand-title">Le Reve Homes</h3>
+          <p class="brand-description">Le Reve is an establishment established by two highly experienced engineers by a collective expertise of more than 15 years in the field of high-rise buildings. With a dedicated focus on both commercial and residential projects, we strive to deliver exceptional results that exceed our clients' expectations.</p>
+          <a href="about.html" class="brand-btn">More About Us →</a>
+        </div>
+
+        <!-- Column 2 - Details -->
+        <div class="contact-col">
+          <h3 class="col-header">Contact Details</h3>
+          <div class="info-list">
+            <!-- Phone -->
+            <div class="info-item">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.72 5.72l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.22 16z"/></svg>
+              </div>
+              <div class="info-content">
+                <span class="info-label">Phone</span>
+                <span class="info-value"><a href="tel:+919744750812">097447 50812</a></span>
+                <span class="info-value"><a href="tel:+918089127525">080891 27525</a></span>
+              </div>
+            </div>
+            <!-- Email -->
+            <div class="info-item">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="info-content">
+                <span class="info-label">Email</span>
+                <span class="info-value"><a href="mailto:info@lerevehomes.in">info@lerevehomes.in</a></span>
+              </div>
+            </div>
+            <!-- Address -->
+            <div class="info-item">
+              <div class="info-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="info-content">
+                <span class="info-label">Address</span>
+                <span class="info-value">First floor JBS Illimoottil building, Illimoodu, Thengana, Changanassery, Kottayam, Kerala 686536</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3 - Message Form -->
+        <div class="contact-col">
+          <h3 class="col-header">Send Us A Message</h3>
+          <form method="post" class="contact-form" action="https://formsubmit.co/info@lerevehomes.in">
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" placeholder="Your Name *" required />
+            </div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Your Email *" required />
+              </div>
+              <div class="form-group">
+                <input type="text" name="phone" class="form-control" placeholder="Your Number *" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" name="subject" class="form-control" placeholder="Subject *" required />
+            </div>
+            <div class="form-group">
+              <textarea name="message" class="form-control" placeholder="Message *" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message →</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MAP SECTION
+  ============================================================ -->
+  <section class="map-section">
+    <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=First%20floor%20JBS%20Illimoottil%20building,%20Illimoodu,%20Changanassery,%20Kerala%20686536+(Le%20Reve%20Architectural%20designers)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <style>
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer { background: #1a1a1a; color: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif; line-height: 1.6; }
+    #footer * { box-sizing: border-box; margin: 0; padding: 0; }
+    #footer .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    #footer .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr; gap: 48px; padding: 64px 0 52px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    #footer .footer-brand img { height: 56px; width: auto; object-fit: contain; margin-bottom: 16px; filter: none !important; }
+    #footer .footer-brand p { font-size: 13px; line-height: 1.8; max-width: 240px; }
+    #footer .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+    #footer .footer-social a { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.18); display: grid; place-items: center; transition: border-color 0.4s, background 0.4s; color: #fff;}
+    #footer .footer-social a:hover { border-color: #b8912a; background: #b8912a; }
+    #footer .footer-social a svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    #footer .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 20px; }
+    #footer .footer-col ul { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+    #footer .footer-col ul a { font-size: 13.5px; color: rgba(255,255,255,0.6); transition: color 0.4s; text-decoration: none; }
+    #footer .footer-col ul a:hover { color: #b8912a; }
+    #footer .footer-contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    #footer .footer-contact-item svg { width: 16px; height: 16px; stroke: #b8912a; fill: none; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
+    #footer .footer-contact-item span { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    #footer .footer-contact-item a { color: rgba(255,255,255,0.65); transition: color 0.4s; text-decoration: none; }
+    #footer .footer-contact-item a:hover { color: #b8912a; }
+    #footer .footer-bottom { display: flex; align-items: center; justify-content: center; padding: 22px 0; font-size: 12.5px; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
+    @media (max-width: 860px) { #footer .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; padding: 50px 0 40px; } }
+    @media (max-width: 560px) {
+      #footer .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+      #footer .footer-brand { grid-column: span 2; }
+      #footer .footer-col:last-child { grid-column: span 2; }
+    }
+  </style>
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="le reve.jpg" alt="Le Rêve Homes" />
+          <p>We create elegant, functional and sustainable homes that inspire and stand the test of time.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.19-.77 1.28-5.43 1.28-5.43s-.33-.65-.33-1.62c0-1.52.88-2.66 1.98-2.66.93 0 1.39.7 1.39 1.54 0 .94-.6 2.34-.91 3.64-.26 1.09.54 1.97 1.6 1.97 1.92 0 3.22-2.47 3.22-5.4 0-2.23-1.51-3.9-4.01-3.9-2.93 0-4.76 2.19-4.76 4.64 0 .84.24 1.43.62 1.89.07.08.08.16.06.25l-.23.9c-.04.14-.13.17-.3.1-1.11-.46-1.61-1.69-1.61-3.08C6.83 8.18 9.28 6 12.72 6c2.75 0 4.6 2.01 4.6 4.18 0 3.22-1.8 5.64-4.44 5.64-.89 0-1.73-.48-2.02-1.02l-.55 2.11c-.2.77-.74 1.73-1.1 2.32.83.26 1.71.4 2.62.4 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="Services.html">Services</a></li>
+            <li><a href="int-gallery.html">Gallery</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.72 5.72l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.22 16z"/></svg>
+            <span><a href="tel:+919744750812">097447 50812</a><br /><a href="tel:+918089127525">080891 27525</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span><a href="mailto:info@lerevehomes.in">info@lerevehomes.in</a></span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Our Address</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>First floor JBS Illimoottil building, Illimoodu, Thengana, Changanassery, Kottayam, Kerala 686536</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2023 Le Reve Homes. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating action buttons -->
+  <div class="float-buttons">
+    <a href="https://api.whatsapp.com/send?phone=+919744750812&text=Hello%20there!" target="_blank" class="float-btn" aria-label="WhatsApp">
+      <img src="whatsapp-icon.png" alt="WhatsApp" />
+    </a>
+    <a href="mailto:info@lerevehomes.in" class="float-btn mail" aria-label="Email">✉</a>
+  </div>
+  <button id="back-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    const backTop = document.getElementById('back-top');
+    const scrollProgress = document.getElementById('scroll-progress');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+      backTop.classList.toggle('show', window.scrollY > 400);
+      const h = document.documentElement;
+      const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+      scrollProgress.style.width = pct + '%';
+    });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Mobile menu
+    document.getElementById('navToggle').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.add('open'));
+    document.getElementById('mobileClose').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.remove('open'));
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 50);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>

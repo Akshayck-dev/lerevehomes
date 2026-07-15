@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Rêve Homes | Architecture That Inspires</title>
+  <meta name="description" content="Le Rêve Homes – crafting exceptional architectural spaces, interiors, project management and contracting services for over 4 years." />
+  <link rel="shortcut icon" href="img/favicon.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:       #b8912a;
+      --gold-light: #d4ac50;
+      --gold-pale:  #f5edd8;
+      --ink:        #1a1a1a;
+      --ink-soft:   #555;
+      --paper:      #ffffff;
+      --bg-light:   #faf9f6;
+      --line:       #e8e2d6;
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body:    'Jost', sans-serif;
+      --transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--ff-body);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a  { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .eyebrow {
+      font-family: var(--ff-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .gold-rule { display: inline-block; width: 36px; height: 1px; background: var(--gold); vertical-align: middle; margin-right: 12px; }
+    .section-pad { padding: 40px 0; }
+    .section-pad-sm { padding: 30px 0; }
+
+    /* ============================================================
+       SCROLL PROGRESS
+    ============================================================ */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: var(--gold); z-index: 9999; transition: width 0.1s;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed; left: 0; top: 0; width: 100%; z-index: 1000;
+      background: transparent;
+      box-shadow: none;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 1px 0 var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 100%; margin: 0; padding: 16px 4%;
+    }
+    .nav-logo img { height: 50px; width: auto; object-fit: contain; }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink); position: relative; padding-bottom: 4px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px; background: var(--gold);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* Dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a { display: flex; align-items: center; gap: 5px; }
+    .nav-dropdown > a svg { width: 10px; height: 10px; }
+    .dropdown-menu {
+      position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+      background: var(--paper); border: 1px solid var(--line); border-radius: 4px;
+      min-width: 220px; padding: 8px 0; opacity: 0; visibility: hidden;
+      transition: opacity var(--transition), transform var(--transition);
+      transform: translateX(-50%) translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    }
+    .nav-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown-menu::before { content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; background: transparent; }
+    .dropdown-menu a {
+      display: block; padding: 12px 20px; font-size: 11px;
+      color: var(--ink) !important; letter-spacing: 0.1em; transition: color var(--transition);
+    }
+    .dropdown-menu a:hover { color: var(--gold) !important; background: var(--bg-light); }
+    .dropdown-menu a::after { display: none; }
+
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--gold); color: var(--gold) !important;
+      padding: 10px 24px; border-radius: 2px; font-size: 11px !important;
+      font-weight: 600 !important; letter-spacing: 0.12em !important;
+      transition: background var(--transition), color var(--transition) !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--gold); color: #fff !important; }
+
+    /* Mobile toggle */
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 1.5px; background: var(--ink); transition: background var(--transition); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: var(--paper); z-index: 999;
+      flex-direction: column; padding: 100px 32px 40px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      display: block; padding: 14px 0; font-size: 22px; font-family: var(--ff-display);
+      border-bottom: 1px solid var(--line); color: var(--ink);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 24px; right: 24px;
+      background: none; border: none; cursor: pointer; font-size: 28px; color: var(--ink);
+    }
+
+    @media (max-width: 950px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-inner { padding: 16px 24px; }
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden; background: var(--paper);
+    }
+    .hero-bg-left {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 45%; background: var(--paper); z-index: 2;
+    }
+    .hero-bg-left::after {
+      content: ''; position: absolute; top: 0; bottom: 0; right: -180px;
+      width: 180px; background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    }
+
+    .hero-slides { position: absolute; inset: 0; left: 30%; z-index: 1; }
+    .hero-slide {
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 1.2s ease;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide img {
+      width: 100%; height: 100%; object-fit: cover;
+      transform: scale(1.04); transition: transform 8s ease;
+    }
+    .hero-slide.active img { transform: scale(1); }
+
+    .hero-content {
+      position: relative; z-index: 3;
+      padding: 0 40px; max-width: 600px; width: 100%;
+      margin-left: max(0px, calc((100vw - 1280px) / 2));
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.9s 0.3s forwards;
+    }
+    .hero-eyebrow span { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+    .hero-h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      font-weight: 400; line-height: 1.1; color: var(--ink); letter-spacing: 0.02em;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.9s 0.55s forwards;
+    }
+    .hero-body {
+      margin-top: 24px; font-size: 14.5px; line-height: 1.85;
+      color: var(--ink-soft); max-width: 440px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .hero-actions {
+      margin-top: 36px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.9s 1.05s forwards;
+    }
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold); color: #fff; padding: 14px 30px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      border-radius: 2px; transition: background var(--transition), transform var(--transition);
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-gold svg { width: 16px; height: 16px; }
+
+    /* Hero services strip */
+    .hero-strip {
+      position: absolute; bottom: 0; right: 0; z-index: 4;
+      display: flex; gap: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .hero-strip-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 15px 20px; background: transparent;
+      border-left: none;
+      transition: transform var(--transition);
+    }
+    .hero-strip-item:first-child { border-left: none; }
+    .hero-strip-item:hover { transform: translateY(-4px); }
+    .hero-strip-item img { width: 32px; height: 32px; object-fit: contain; filter: invert(60%) sepia(60%) saturate(400%) hue-rotate(10deg) brightness(80%); }
+    .hero-strip-item span { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-align: center; max-width: 100px; line-height: 1.4; }
+
+    /* Slide dots */
+    .hero-dots {
+      position: absolute; bottom: 32px; left: 40px; z-index: 5;
+      display: flex; gap: 8px;
+    }
+    .hero-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.15);
+      cursor: pointer; transition: background var(--transition), transform var(--transition);
+    }
+    .hero-dot.active { background: var(--gold); transform: scale(1.4); }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 1100px) {
+      #hero { flex-direction: column; justify-content: center; align-items: stretch; padding-top: 100px; }
+      .hero-content { margin: auto 0; padding: 40px 24px; text-align: center; max-width: 100%; z-index: 3; }
+      .hero-eyebrow { justify-content: center; }
+      .hero-h1 { font-size: 42px; line-height: 1.1; }
+      .hero-body { margin: 0 auto 30px; font-size: 14px; }
+      .hero-strip { flex-wrap: wrap; width: 100%; position: relative; bottom: auto; right: auto; border-radius: 0; box-shadow: none; border-top: 1px solid var(--line); z-index: 4; }
+      .hero-strip-item { flex: 1; min-width: 50%; border-left: none; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px; }
+      .hero-strip-item:nth-child(even) { border-right: none; }
+      .hero-slides { left: 0; }
+      .hero-bg-left { width: 100%; background: rgba(255,255,255,0.85); backdrop-filter: blur(5px); }
+      .hero-bg-left::after { display: none; }
+      .hero-dots { left: 50%; transform: translateX(-50%); bottom: calc(100% + 20px); top: auto; z-index: 5; display: none; } /* hide dots on mobile for cleaner look */
+    }
+    @media (max-width: 480px) {
+      .hero-h1 { font-size: 32px; }
+      .hero-strip-item { padding: 15px; }
+      .hero-strip-item img { width: 26px; height: 26px; }
+      .hero-strip-item span { font-size: 9px; }
+    }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    #about { background: var(--bg-light); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img-wrap img {
+      width: 100%; height: 500px; object-fit: cover; border-radius: 4px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+    }
+    .about-img-accent {
+      position: absolute; bottom: -16px; right: -16px;
+      width: 60%; height: 60%; border: 3px solid var(--gold); border-radius: 4px;
+      pointer-events: none; z-index: -1;
+    }
+    .about-badge {
+      position: absolute; top: 24px; right: -20px;
+      background: var(--gold); color: #fff; padding: 16px 20px;
+      font-family: var(--ff-display); font-size: 13px; border-radius: 4px;
+      box-shadow: 0 8px 30px rgba(184,145,42,0.3);
+    }
+    .about-badge strong { display: block; font-size: 28px; font-weight: 500; }
+    .about-text .section-eyebrow { margin-bottom: 10px; }
+    .about-text h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400; line-height: 1.15; margin-bottom: 8px;
+    }
+    .section-rule { width: 48px; height: 2px; background: var(--gold); margin: 18px 0 24px; }
+    .about-text p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 16px; }
+    .about-pillars {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin: 28px 0;
+    }
+    .pillar { text-align: center; }
+    .pillar-icon { margin: 0 auto 8px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--gold); }
+    .pillar-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .pillar-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--ink); color: var(--ink); padding: 13px 26px;
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      border-radius: 3px; transition: background var(--transition), color var(--transition);
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--paper); }
+    .btn-outline svg { width: 14px; height: 14px; }
+
+    @media (max-width: 860px) {
+      .about-grid { grid-template-columns: 1fr; gap: 50px; }
+      .about-img-wrap img { height: 340px; }
+      .about-badge { right: 12px; }
+      .about-pillars { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ============================================================
+       SERVICES
+    ============================================================ */
+    #services { background: var(--paper); }
+    .services-header { text-align: center; margin-bottom: 56px; }
+    .services-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 400; margin-top: 6px; color: var(--ink);
+    }
+    .services-header .section-rule { margin: 14px auto 20px; }
+    .services-subtitle {
+      max-width: 600px; margin: 0 auto;
+      font-size: 15px; color: var(--ink-soft); line-height: 1.6;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .service-card {
+      background: #141414; border-radius: 12px;
+      overflow: hidden; position: relative;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex; flex-direction: column;
+    }
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
+    .service-img-wrap { position: relative; height: 180px; }
+    .service-img-wrap > img { width: 100%; height: 100%; object-fit: cover; }
+    .service-icon-circle {
+      position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%);
+      width: 56px; height: 56px; background: #141414; border: 1px solid var(--gold);
+      border-radius: 50%; display: grid; place-items: center; z-index: 10;
+    }
+    /* Simple trick to make the icon yellowish like gold */
+    .service-icon-circle img { width: 24px; height: 24px; filter: invert(72%) sepia(50%) saturate(550%) hue-rotate(5deg) brightness(100%) contrast(90%); }
+    .service-content { padding: 40px 20px 24px; flex: 1; display: flex; flex-direction: column; }
+    .service-card h3 {
+      font-family: var(--ff-display); font-size: 16.5px; font-weight: 400;
+      color: #fff; margin-bottom: 10px; letter-spacing: 0.02em;
+    }
+    .service-card p {
+      font-size: 13px; color: #a0a0a0; line-height: 1.5; margin-bottom: 20px; flex: 1;
+    }
+    .service-learn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold);
+      transition: gap var(--transition);
+    }
+    .service-learn:hover { gap: 12px; }
+    .service-learn svg { width: 14px; height: 14px; }
+
+    @media (max-width: 860px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-card { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .service-card:nth-child(even) { border-right: none; }
+    }
+    @media (max-width: 480px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; }
+    }
+
+    /* ============================================================
+       STATS
+    ============================================================ */
+    #stats { background: var(--gold-pale); }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; text-align: center;
+    }
+    .stat-item {
+      padding: 50px 24px; border-right: 1px solid rgba(184,145,42,0.2);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon { margin: 0 auto 14px; width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba(184,145,42,0.4); border-radius: 50%; }
+    .stat-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .stat-number {
+      font-family: var(--ff-display); font-size: 3.2rem; font-weight: 400; color: var(--ink); line-height: 1;
+    }
+    .stat-number sup { font-size: 1.8rem; vertical-align: super; }
+    .stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+
+    /* ============================================================
+       CTA SECTION
+    ============================================================ */
+    #cta {
+      background: #141414; color: #fff; text-align: center;
+      padding: 80px 24px; margin-top: 60px;
+    }
+    .cta-content { max-width: 600px; margin: 0 auto; }
+    .cta-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 16px; display: block; }
+    #cta h2 { font-family: var(--ff-display); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 400; margin-bottom: 24px; color: #fff; }
+    #cta p { font-size: 14px; color: #a0a0a0; line-height: 1.6; margin-bottom: 32px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, #d3a951 0%, #b8912a 100%); color: #fff !important;
+      padding: 14px 32px; border-radius: 4px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(184,145,42,0.3); transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(184,145,42,0.4); }
+
+    @media (max-width: 700px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-bottom: 1px solid rgba(184,145,42,0.2); }
+      .stat-item:nth-child(even) { border-right: none; }
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer { background: var(--ink); color: rgba(255,255,255,0.7); }
+    .footer-top {
+      display: grid; grid-template-columns: 1.4fr 1fr 1.2fr 1.2fr;
+      gap: 48px; padding: 64px 0 52px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand img { height: 56px; width: auto; object-fit: contain; margin-bottom: 16px; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; max-width: 240px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social a {
+      width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.18);
+      display: grid; place-items: center; transition: border-color var(--transition), background var(--transition);
+    }
+    .footer-social a:hover { border-color: var(--gold); background: var(--gold); }
+    .footer-social a svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .footer-col h5 {
+      font-family: var(--ff-body); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 20px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a {
+      font-size: 13.5px; color: rgba(255,255,255,0.6); transition: color var(--transition);
+    }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-contact-item {
+      display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;
+    }
+    .footer-contact-item svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.8; flex-shrink: 0; margin-top: 2px; }
+    .footer-contact-item span { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .footer-contact-item a { color: rgba(255,255,255,0.65); transition: color var(--transition); }
+    .footer-contact-item a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: center;
+      padding: 22px 0; font-size: 12.5px; color: rgba(255,255,255,0.35);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 860px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; padding: 50px 0 40px; }
+    }
+    @media (max-width: 560px) {
+      #footer .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+      #footer .footer-brand { grid-column: span 2; }
+      #footer .footer-col:last-child { grid-column: span 2; }
+    }
+
+    /* ============================================================
+       REVEAL ON SCROLL
+    ============================================================ */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       FLOATING BUTTONS
+    ============================================================ */
+    .float-buttons { position: fixed; right: 24px; bottom: 120px; z-index: 500; display: flex; flex-direction: column; gap: 12px; }
+    .float-btn {
+      width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18); transition: transform var(--transition);
+    }
+    .float-btn:hover { transform: scale(1.1); }
+    .float-btn img { width: 30px; height: 30px; object-fit: contain; }
+    .float-btn.mail { background: var(--gold); font-size: 22px; color: #fff; text-decoration: none; }
+
+    /* ============================================================
+       BACK TO TOP
+    ============================================================ */
+    #back-top {
+      position: fixed; right: 16px; bottom: 24px; z-index: 500;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--ink); color: #fff; display: grid; place-items: center;
+      opacity: 0; pointer-events: none; transition: opacity var(--transition), transform var(--transition);
+      cursor: pointer; border: none;
+    }
+    #back-top.show { opacity: 1; pointer-events: all; }
+    #back-top:hover { transform: translateY(-3px); background: var(--gold); }
+    #back-top svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; }
+
+    .mobile-dropdown { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
+    .mobile-dropdown-toggle { 
+      display: flex; align-items: center; justify-content: space-between; 
+      padding: 14px 0; font-size: 22px; font-family: var(--ff-display);
+      color: var(--ink); cursor: pointer;
+    }
+    .mobile-dropdown-toggle svg { width: 14px; height: 8px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform var(--transition); }
+    .mobile-dropdown.open .mobile-dropdown-toggle svg { transform: rotate(180deg); color: var(--gold); }
+    .mobile-dropdown-menu {
+      display: none; flex-direction: column; padding-left: 20px; padding-bottom: 10px;
+    }
+    .mobile-dropdown.open .mobile-dropdown-menu { display: flex; }
+    .mobile-dropdown-menu a { border-bottom: none; font-size: 16px; padding: 10px 0; font-family: var(--ff-body); }
+  </style>
+</head>
+
+<body>
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="le reve.jpg" alt="Le Rêve Homes Logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav-dropdown">
+          <a href="Services.html">
+            Services
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="architectural_designing.html">Architectural Designing</a></li>
+            <li><a href="Project Management.html">Project Management</a></li>
+            <li><a href="Interior Designing.html">Interior Designers</a></li>
+            <li><a href="Contractors.html">Contractors</a></li>
+          </ul>
+        </li>
+        <li class="nav-dropdown">
+          <a href="gallery.html">
+            Gallery
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="int-gallery.html">Interior Gallery</a></li>
+            <li><a href="ext-gallery.html">Exterior Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="contact.html" class="nav-cta">
+            Get In Touch
+          </a>
+        </li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">✕</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    
+    <div class="mobile-dropdown">
+      <div class="mobile-dropdown-toggle">Services <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></div>
+      <div class="mobile-dropdown-menu">
+        <a href="architectural_designing.html">Architectural Designing</a>
+        <a href="Project Management.html">Project Management</a>
+        <a href="Interior Designing.html">Interior Designers</a>
+        <a href="Contractors.html">Contractors</a>
+      </div>
+    </div>
+
+    <div class="mobile-dropdown">
+      <div class="mobile-dropdown-toggle">Gallery <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></div>
+      <div class="mobile-dropdown-menu">
+        <a href="int-gallery.html">Interior Gallery</a>
+        <a href="ext-gallery.html">Exterior Gallery</a>
+      </div>
+    </div>
+
+    <a href="testimonials.html">Testimonials</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" style="color:var(--gold);margin-top:8px;">Get In Touch →</a>
+  </div>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-bg-left"></div>
+    <div class="hero-slides">
+      <div class="hero-slide active">
+        <img src="img/slider/22.jpg" alt="Le Rêve Homes Architecture" />
+      </div>
+      <div class="hero-slide">
+        <img src="img/slider/11.jpg" alt="Le Rêve Homes Interiors" />
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span>Architecture That Inspires</span>
+      </div>
+      <h1 class="hero-h1">
+        DESIGNING<br />SPACES.<br />BUILDING<br />DREAMS.
+      </h1>
+      <p class="hero-body">
+        From concept to creation, we craft exceptional spaces that reflect your vision and stand the test of time.
+      </p>
+      <div class="hero-actions">
+        <a href="gallery.html" class="btn-gold">
+          Explore Our Work
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Services strip bottom-right -->
+    <div class="hero-strip">
+      <div class="hero-strip-item">
+        <img src="img/icons/icon-1.png" alt="Architectural Designers" />
+        <span>Architectural Designers</span>
+      </div>
+      <div class="hero-strip-item">
+        <img src="img/icons/icon-2.png" alt="Project Management" />
+        <span>Project Management Consultants</span>
+      </div>
+      <div class="hero-strip-item">
+        <img src="img/icons/icon-4.png" alt="Interiors" />
+        <span>Interiors</span>
+      </div>
+      <div class="hero-strip-item">
+        <img src="img/icons/icon-3.png" alt="Contractors" />
+        <span>Contractors</span>
+      </div>
+    </div>
+
+    <!-- Slide dots -->
+    <div class="hero-dots">
+      <div class="hero-dot active" data-idx="0"></div>
+      <div class="hero-dot" data-idx="1"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section id="about" class="section-pad">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap reveal">
+          <img src="img/178432453_1883400805153374_9077133313879490011_n.png" alt="Le Rêve Homes Project" />
+          <div class="about-img-accent"></div>
+          <div class="about-badge">
+            <strong>4<sup>+</sup></strong>
+            Years of Excellence
+          </div>
+        </div>
+        <div class="about-text">
+          <div class="reveal">
+            <p class="eyebrow">About Le Rêve</p>
+          </div>
+          <div class="reveal" style="transition-delay:0.1s">
+            <h2>Crafting Timeless<br />Spaces Since 4+ Years</h2>
+            <div class="section-rule"></div>
+          </div>
+          <div class="reveal" style="transition-delay:0.2s">
+            <p>Le Reve is a well-established Architectural consultancy firm, that has been providing top-notch architectural design, interiors, contracting and project management consultancy services for over 4 years. The firm was founded by two highly experienced engineers who possess an impressive track record of designing and managing commercial and residential high-rise buildings. Their years of experience have allowed Le Reve to quickly establish itself as one of the top consultancies in the area.</p>
+            <p>At Le Reve, we prioritize customized solutions for every project, understanding that each one is unique. Our team includes architectural and interior designers, project managers, and contractors who work collaboratively to cover all aspects of the project, from design to execution. We aim to provide innovative and sustainable solutions that benefit our clients in the long-term, keeping up-to-date with industry trends and technologies. Communication is key, and we maintain an open line of communication with our clients throughout the entire process. Our commitment to customization, innovation, and communication has helped us establish a reputation for delivering exceptional services that exceed our clients' expectations.</p>
+          </div>
+          <div class="about-pillars reveal" style="transition-delay:0.3s">
+            <div class="pillar">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </div>
+              <div class="pillar-label">Innovative Designs</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="pillar-label">Sustainable Solutions</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="pillar-label">Client Focused</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              </div>
+              <div class="pillar-label">Quality Assured</div>
+            </div>
+          </div>
+          <div class="reveal" style="transition-delay:0.4s">
+            <a href="about.html" class="btn-outline">
+              Read More About Us
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICES
+  ============================================================ -->
+  <section id="services" class="section-pad">
+    <div class="container">
+      <div class="services-header reveal">
+        <p class="eyebrow">What We Do</p>
+        <h2>Our Services</h2>
+        <div class="section-rule"></div>
+        <p class="services-subtitle">End-to-end design and construction solutions tailored to bring your vision to life with precision and excellence.</p>
+      </div>
+      <div class="services-grid reveal" style="transition-delay:0.15s">
+        <!-- Service 1 -->
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="img/services/1.jpg" alt="Architectural Designing" />
+            <div class="service-icon-circle">
+              <img src="img/icons/icon-1.png" alt="Icon" />
+            </div>
+          </div>
+          <div class="service-content">
+            <h3>Architectural Designing</h3>
+            <p>We believe that great design has the power to transform spaces and improve lives.</p>
+            <a href="architectural_designing.html" class="service-learn">
+              Learn More
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Service 2 -->
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="img/services/2.jpg" alt="Project Management Consultancy" />
+            <div class="service-icon-circle">
+              <img src="img/icons/icon-2.png" alt="Icon" />
+            </div>
+          </div>
+          <div class="service-content">
+            <h3>Project Management Consultancy</h3>
+            <p>At our project management consultancy, we understand the complexities of effective construction management.</p>
+            <a href="Project Management.html" class="service-learn">
+              Learn More
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Service 3 -->
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="img/services/3.jpg" alt="Interior Designers" />
+            <div class="service-icon-circle">
+              <img src="img/icons/icon-4.png" alt="Icon" />
+            </div>
+          </div>
+          <div class="service-content">
+            <h3>Interior Designers</h3>
+            <p>Interior designers play a vital role in transforming the look and feel of a space.</p>
+            <a href="Interior Designing.html" class="service-learn">
+              Learn More
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        <!-- Service 4 -->
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="img/services/4.jpg" alt="Contractors" />
+            <div class="service-icon-circle">
+              <img src="img/icons/icon-3.png" alt="Icon" />
+            </div>
+          </div>
+          <div class="service-content">
+            <h3>Contractors</h3>
+            <p>When it comes to any construction project, finding the right contractor is essential for its success.</p>
+            <a href="Contractors.html" class="service-learn">
+              Learn More
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section id="cta">
+    <div class="container">
+      <div class="cta-content reveal">
+        <span class="cta-eyebrow">Let's Work Together</span>
+        <h2>Ready to build your dream space?</h2>
+        <p>Get in touch with our team of experts to discuss your architectural or interior design project today.</p>
+        <a href="contact.html" class="cta-btn">Contact Us Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <img src="le reve.jpg" alt="Le Rêve Homes" />
+          <p>We create elegant, functional and sustainable homes that inspire and stand the test of time.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="Pinterest">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.19-.77 1.28-5.43 1.28-5.43s-.33-.65-.33-1.62c0-1.52.88-2.66 1.98-2.66.93 0 1.39.7 1.39 1.54 0 .94-.6 2.34-.91 3.64-.26 1.09.54 1.97 1.6 1.97 1.92 0 3.22-2.47 3.22-5.4 0-2.23-1.51-3.9-4.01-3.9-2.93 0-4.76 2.19-4.76 4.64 0 .84.24 1.43.62 1.89.07.08.08.16.06.25l-.23.9c-.04.14-.13.17-.3.1-1.11-.46-1.61-1.69-1.61-3.08C6.83 8.18 9.28 6 12.72 6c2.75 0 4.6 2.01 4.6 4.18 0 3.22-1.8 5.64-4.44 5.64-.89 0-1.73-.48-2.02-1.02l-.55 2.11c-.2.77-.74 1.73-1.1 2.32.83.26 1.71.4 2.62.4 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="Services.html">Services</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="testimonials.html">Testimonials</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.72 5.72l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.22 16z"/></svg>
+            <span><a href="tel:+919744750812">097447 50812</a><br /><a href="tel:+918089127525">080891 27525</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span><a href="mailto:info@lerevehomes.in">info@lerevehomes.in</a></span>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="footer-col">
+          <h5>Our Address</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>First floor JBS Illimoottil building, Illimoodu, Thengana, Changanassery, Kottayam, Kerala 686536</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2023 Le Reve Homes. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating action buttons -->
+  <div class="float-buttons">
+    <a href="https://api.whatsapp.com/send?phone=+919744750812&text=Hello%20there!" target="_blank" class="float-btn" aria-label="WhatsApp">
+      <img src="whatsapp-icon.png" alt="WhatsApp" />
+    </a>
+    <a href="mailto:info@lerevehomes.in" class="float-btn mail" aria-label="Email">✉</a>
+  </div>
+
+  <!-- Back to top -->
+  <button id="back-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script>
+    /* ---- Navbar scroll ---- */
+    const navbar = document.getElementById('navbar');
+    const scrollProgress = document.getElementById('scroll-progress');
+    const backTop = document.getElementById('back-top');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+      backTop.classList.toggle('show', window.scrollY > 400);
+
+      const h = document.documentElement;
+      const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+      scrollProgress.style.width = pct + '%';
+    });
+
+    /* ---- Mobile menu ---- */
+    document.getElementById('navToggle').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.add('open'));
+    document.getElementById('mobileClose').addEventListener('click', () =>
+      document.getElementById('mobileMenu').classList.remove('open'));
+
+    /* ---- Back to top ---- */
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ---- Hero slider ---- */
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots   = document.querySelectorAll('.hero-dot');
+    let current  = 0, timer;
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = idx;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+    function next() { goTo((current + 1) % slides.length); }
+
+    dots.forEach(d => d.addEventListener('click', () => {
+      clearInterval(timer);
+      goTo(+d.dataset.idx);
+      timer = setInterval(next, 6000);
+    }));
+
+    timer = setInterval(next, 6000);
+
+    /* ---- Reveal on scroll ---- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
