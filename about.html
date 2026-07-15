@@ -533,6 +533,12 @@
       document.getElementById('mobileMenu').classList.add('open'));
     document.getElementById('mobileClose').addEventListener('click', () =>
       document.getElementById('mobileMenu').classList.remove('open'));
+    // Mobile submenu dropdowns
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggle.parentElement.classList.toggle('open');
+      });
+    });
 
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 40);
