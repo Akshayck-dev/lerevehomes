@@ -940,12 +940,16 @@
       const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
       scrollProgress.style.width = pct + '%';
     });
-
     /* ---- Mobile menu ---- */
     document.getElementById('navToggle').addEventListener('click', () =>
       document.getElementById('mobileMenu').classList.add('open'));
     document.getElementById('mobileClose').addEventListener('click', () =>
       document.getElementById('mobileMenu').classList.remove('open'));
+    document.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggle.parentElement.classList.toggle('open');
+      });
+    });
 
     /* ---- Back to top ---- */
     backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
