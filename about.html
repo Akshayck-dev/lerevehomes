@@ -54,7 +54,7 @@
     
     .nav-dropdown { position: relative; }
     .nav-dropdown > a { display: flex; align-items: center; gap: 5px; }
-    .nav-dropdown > a svg { width: 10px; height: 10px; }
+    .nav-dropdown > a svg { width: 10px; height: 6px; }
     .dropdown-menu { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: var(--paper); border: 1px solid var(--line); border-radius: 4px; min-width: 220px; padding: 8px 0; opacity: 0; visibility: hidden; transition: opacity var(--transition), transform var(--transition); transform: translateX(-50%) translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
     .nav-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     .dropdown-menu::before { content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px; background: transparent; }
@@ -303,7 +303,7 @@
       padding: 14px 0; font-size: 22px; font-family: var(--ff-display);
       color: var(--ink); cursor: pointer;
     }
-    .mobile-dropdown-toggle svg { width: 14px; height: 8px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform var(--transition); }
+    .mobile-dropdown-toggle svg { width: 10px; height: 6px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform var(--transition); }
     .mobile-dropdown.open .mobile-dropdown-toggle svg { transform: rotate(180deg); color: var(--gold); }
     .mobile-dropdown-menu {
       display: none; flex-direction: column; padding-left: 20px; padding-bottom: 10px;
@@ -320,45 +320,56 @@
   <!-- NAVBAR -->
   <nav id="navbar" class="scrolled">
     <div class="nav-inner">
-      <div class="nav-logo">
-        <a href="index.html"><img src="le reve.jpg" alt="Le Rêve" /></a>
-      </div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html" class="active">About</a>
-        <div class="nav-dropdown">
-          <a href="#">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></a>
-          <div class="dropdown-menu">
-            <a href="architectural_designing.html">Architectural Designing</a>
-            <a href="Project Management.html">Project Management</a>
-            <a href="Interior Designing.html">Interior Designing</a>
-            <a href="Contractors.html">Contractors</a>
-          </div>
-        </div>
-        <div class="nav-dropdown">
-          <a href="#">Gallery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></a>
-          <div class="dropdown-menu">
-            <a href="int-gallery.html">Interior</a>
-            <a href="ext-gallery.html">Exterior</a>
-          </div>
-        </div>
-        <a href="testimonials.html">Testimonials</a>
-        <a href="contact.html" class="nav-cta">Contact</a>
-      </div>
-      <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+      <a href="index.html" class="nav-logo">
+        <img src="le reve.jpg" alt="Le Rêve Homes Logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav-dropdown">
+          <a href="Services.html">
+            Services
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="architectural_designing.html">Architectural Designing</a></li>
+            <li><a href="Project Management.html">Project Management</a></li>
+            <li><a href="Interior Designing.html">Interior Designers</a></li>
+            <li><a href="Contractors.html">Contractors</a></li>
+          </ul>
+        </li>
+        <li class="nav-dropdown">
+          <a href="gallery.html">
+            Gallery
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="int-gallery.html">Interior Gallery</a></li>
+            <li><a href="ext-gallery.html">Exterior Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="contact.html" class="nav-cta">
+            Get In Touch
+          </a>
+        </li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
-    <button class="mobile-close" id="mobileClose">×</button>
+    <button class="mobile-close" id="mobileClose">✕</button>
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
-    <a href="Services.html">Services</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="testimonials.html">Testimonials</a>
-    <a href="contact.html">Contact</a>
-  </div>
+    
+    <div class="mobile-dropdown">
+      <div class="mobile-dropdown-toggle">Services <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg></div>
 
   <!-- ABOUT HERO -->
   <section class="about-hero">
@@ -382,7 +393,7 @@
       <div class="about-pillars">
         <div class="about-pillar">
           <div class="about-pillar-icon">
-            <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16M9 9h6M9 13h6M9 17h6"/></svg>
+            <svg viewBox="0 0 10 6"><path d="M3 21h18M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16M9 9h6M9 13h6M9 17h6"/></svg>
           </div>
           <div class="about-pillar-text">
             <h4>Dream Driven</h4>
@@ -391,7 +402,7 @@
         </div>
         <div class="about-pillar">
           <div class="about-pillar-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg viewBox="0 0 10 6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <div class="about-pillar-text">
             <h4>Experience</h4>
@@ -400,7 +411,7 @@
         </div>
         <div class="about-pillar">
           <div class="about-pillar-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <svg viewBox="0 0 10 6"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
           <div class="about-pillar-text">
             <h4>Excellence</h4>
@@ -435,16 +446,16 @@
           <p>We create elegant, functional and sustainable homes that inspire and stand the test of time.</p>
           <div class="footer-social">
             <a href="#" aria-label="Facebook">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              <svg viewBox="0 0 10 6"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             </a>
             <a href="#" aria-label="Instagram">
-              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <svg viewBox="0 0 10 6"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </a>
             <a href="#" aria-label="Pinterest">
-              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.19-.77 1.28-5.43 1.28-5.43s-.33-.65-.33-1.62c0-1.52.88-2.66 1.98-2.66.93 0 1.39.7 1.39 1.54 0 .94-.6 2.34-.91 3.64-.26 1.09.54 1.97 1.6 1.97 1.92 0 3.22-2.47 3.22-5.4 0-2.23-1.51-3.9-4.01-3.9-2.93 0-4.76 2.19-4.76 4.64 0 .84.24 1.43.62 1.89.07.08.08.16.06.25l-.23.9c-.04.14-.13.17-.3.1-1.11-.46-1.61-1.69-1.61-3.08C6.83 8.18 9.28 6 12.72 6c2.75 0 4.6 2.01 4.6 4.18 0 3.22-1.8 5.64-4.44 5.64-.89 0-1.73-.48-2.02-1.02l-.55 2.11c-.2.77-.74 1.73-1.1 2.32.83.26 1.71.4 2.62.4 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+              <svg viewBox="0 0 10 6"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.19-.77 1.28-5.43 1.28-5.43s-.33-.65-.33-1.62c0-1.52.88-2.66 1.98-2.66.93 0 1.39.7 1.39 1.54 0 .94-.6 2.34-.91 3.64-.26 1.09.54 1.97 1.6 1.97 1.92 0 3.22-2.47 3.22-5.4 0-2.23-1.51-3.9-4.01-3.9-2.93 0-4.76 2.19-4.76 4.64 0 .84.24 1.43.62 1.89.07.08.08.16.06.25l-.23.9c-.04.14-.13.17-.3.1-1.11-.46-1.61-1.69-1.61-3.08C6.83 8.18 9.28 6 12.72 6c2.75 0 4.6 2.01 4.6 4.18 0 3.22-1.8 5.64-4.44 5.64-.89 0-1.73-.48-2.02-1.02l-.55 2.11c-.2.77-.74 1.73-1.1 2.32.83.26 1.71.4 2.62.4 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
             </a>
             <a href="#" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <svg viewBox="0 0 10 6"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
           </div>
         </div>
@@ -464,18 +475,18 @@
         <div class="footer-col">
           <h5>Contact Us</h5>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.72 5.72l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.22 16z"/></svg>
+            <svg viewBox="0 0 10 6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.72 5.72l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.22 16z"/></svg>
             <span><a href="tel:+919744750812">097447 50812</a><br /><a href="tel:+918089127525">080891 27525</a></span>
           </div>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg viewBox="0 0 10 6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <span><a href="mailto:info@lerevehomes.in">info@lerevehomes.in</a></span>
           </div>
         </div>
         <div class="footer-col">
           <h5>Our Address</h5>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg viewBox="0 0 10 6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span>First floor JBS Illimoottil building, Illimoodu, Thengana, Changanassery, Kottayam, Kerala 686536</span>
           </div>
         </div>
@@ -495,7 +506,7 @@
 
   <!-- Back to top -->
   <button id="back-top" aria-label="Back to top">
-    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+    <svg viewBox="0 0 10 6"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 
   <!-- SCRIPTS -->
